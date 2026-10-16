@@ -68,7 +68,7 @@ The PostgreSQL ingestion workflow supports queued jobs, retries, worker leases, 
 | Relationship queries | Neo4j, Cypher |
 | Optional text-to-SQL | Gemini, SQLGlot validation |
 | Database migrations | Alembic, SQLAlchemy |
-| Verification | pytest, workflow verification and load-testing scripts |
+
 
 ## Repository Structure
 
@@ -86,8 +86,6 @@ backend/
     workflow/        Validated LangGraph workflow
     main.py          FastAPI application
   migrations/        Versioned database migrations
-  scripts/           Indexing, workers, verification, and benchmarks
-  tests/             Automated backend tests
   requirements.txt
 
 frontend/
@@ -95,11 +93,12 @@ frontend/
   package.json
   package-lock.json
 
-data/
-  structured/        CSV finance records
-  documents/         Supporting document corpus
+sample_data/
+  structured/        Fictional finance records
+  documents/         Fictional supporting documents
+  generate_sample.py Dataset generator
+  USAGE.txt          Instructions and expected answers
 
-docs/                Architecture, data model, and evaluation notes
 .env.example         Configuration template
 ```
 
@@ -115,6 +114,13 @@ From the repository root:
 Copy-Item .env.example .env
 ```
 
+From the repository root in a fresh checkout:
+
+```powershell
+New-Item -ItemType Directory -Path data -Force
+Copy-Item -Recurse -LiteralPath sample_data/structured -Destination data/structured
+Copy-Item -Recurse -LiteralPath sample_data/documents -Destination data/documents
+```
 The default configuration uses SQLite and FAISS for local development, with LLM text-to-SQL disabled.
 
 Neo4j is required for graph traversal. PostgreSQL with pgvector is required for the durable document-search and ingestion configuration. Gemini credentials are required when enabling LLM text-to-SQL.
@@ -148,36 +154,23 @@ Frontend: http://localhost:5173
 
 The frontend connects to `http://127.0.0.1:8000` by default. Set `VITE_API_BASE_URL` to use another backend address.
 
-## Example Questions
-
-- Which PR204 invoices are unpaid?
-- What does the finance procedure require before invoice approval?
-- Which documents are missing before INV5003 can proceed?
-- What evidence supports the dispute for INV5004?
-
 ## Optional Infrastructure Setup
 
 ### PostgreSQL and Document Search
 
-Configure the database URLs in `.env`, then run from `backend/`:
+The quick-start uses SQLite and FAISS. PostgreSQL with pgvector is supported
+
+After configuring database URLs in `.env`, run schema migrations
+from `backend/`:
 
 ```powershell
+cd backend
 python -m alembic upgrade head
-python scripts\initialize_postgres.py
-python scripts\index_postgres_documents.py
-python scripts\compare_document_search.py
 ```
 
-Set `DOCUMENT_SEARCH_BACKEND=postgres` after configuring and indexing the PostgreSQL document store.
-
-For queued document ingestion:
-
-```powershell
-python scripts\enqueue_document_index.py
-python scripts\run_document_worker.py
-```
-
-Use the supplied PostgreSQL role script to configure restricted query access, with separate credentials for indexing and migrations.
+Migrations create the schema; they do not load finance records or
+index documents. Enable `DOCUMENT_SEARCH_BACKEND=postgres` only
+after populating the database and building a document index.
 
 ### Neo4j
 
@@ -185,7 +178,6 @@ Start a Neo4j instance and configure its connection settings in `.env`. From `ba
 
 ```powershell
 python -m app.graph.loader
-python scripts\check_graph_projection.py
 ```
 
 Graph rebuilds use versioned projections with validation before activation.
@@ -199,20 +191,3 @@ Configure `GEMINI_API_KEY` and select a rollout mode:
 - `active`: execute accepted generated SQL with deterministic fallback.
 
 Active mode requires PostgreSQL. Generated SQL passes backend validation for read-only behavior, approved schema usage, scope, parameters, and query cost.
-
-## Verification
-
-Backend tests:
-
-```powershell
-cd backend
-python -m pytest -q
-```
-
-Frontend production build:
-
-```powershell
-cd frontend
-npm run build
-```
-
