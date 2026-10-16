@@ -1,0 +1,13 @@
+Document ID: DOC-DEMO-INV9104
+Document Type: Reconciliation Note
+Document Date: 2026-01-20
+Invoice ID: INV9104
+PO ID: PO9204
+Property ID: P901
+Project ID: PR901
+Vendor ID: V904
+Cost Code: CC904
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+Invoice INV9104 covers Demo lobby tiles. Total: INR 45,000. Purchase order PO9204: INR 40,000. Payment is on hold. Obtain a corrected invoice or written approval for the INR 5,000 variance before release.

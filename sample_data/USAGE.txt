@@ -1,0 +1,70 @@
+PropertyLedger synthetic demo dataset
+===================================
+
+All names, identifiers, dates, amounts, payment references, tax identifiers,
+and document narratives in this folder were invented for demonstration.
+These files are not anonymized copies of company records. Amounts are INR.
+
+Contents
+--------
+structured/: 7 CSV tables containing 3 properties/projects, 5 vendors,
+4 cost codes, 8 purchase orders, 8 invoices, 2 payments and 6 budgets.
+documents/: 10 fictional plain-text documents with parser-compatible metadata.
+generate_sample.py: deterministic generator that reads no company files.
+Run `python sample_data/generate_sample.py` to regenerate this folder's data.
+The generator overwrites only its own generated CSV and document filenames.
+
+Using the dataset
+-----------------
+The application currently loads data/structured and data/documents; it does
+not automatically load sample_data/. No application files were changed.
+
+In a SEPARATE public checkout that contains no company data, copy the two
+subfolders into data/structured and data/documents. For example, from the
+root of that clean checkout in PowerShell:
+
+New-Item -ItemType Directory -Path data -Force
+Copy-Item -Recurse -LiteralPath sample_data/structured -Destination data/structured
+Copy-Item -Recurse -LiteralPath sample_data/documents -Destination data/documents
+
+Use these commands only when those destination subfolders do not yet exist.
+Do not copy over or combine with the current workspace's confidential data/.
+Commit sample_data/ to GitHub and keep the original data/ excluded.
+Start with a fresh local index/database; rebuild document and graph indexes
+when switching datasets, so prior company records cannot remain in use.
+
+These files follow the existing CSV columns and document metadata format.
+They use new identifiers, so existing tests and benchmarks that expect the
+original records or exact original answers are not expected to pass unchanged.
+
+Demo questions and expected facts
+--------------------------------
+Which PR901 invoices are unpaid?
+  INV9101, INV9103, INV9104 and INV9108 under the application's unpaid rule.
+  INV9102 is partially paid and is excluded from that classification.
+
+Which PR901 invoices exceed their purchase orders?
+  INV9101: 12,000; INV9102: 6,000; INV9104: 5,000; INV9108: 3,000.
+
+Which PR901 cost codes are over budget?
+  CC901: 15,000; CC904: 3,000.
+
+Which documents are missing before INV9103 can proceed?
+  Signed advance request and current vendor registration documentation.
+
+Why is INV9104 on hold?
+  The 45,000 invoice exceeds the 40,000 PO; a corrected invoice or written
+  variance approval is required before payment.
+
+Negative evidence examples
+-------------------------
+INV9108 deliberately has no invoice-specific document.
+DOC-DEMO-INV9107 belongs to PR903 and must not support PR901 answers.
+No bank account numbers or real personal contact details are included.
+
+Budget conventions
+------------------
+For this demo, committed_amount equals the sum of recorded invoice amounts
+in the project/cost-code group, including paid invoices. actual_amount equals
+completed payments, and remaining_budget = budget_amount - committed_amount.
+PO totals independently equal po_quantity * po_unit_rate.

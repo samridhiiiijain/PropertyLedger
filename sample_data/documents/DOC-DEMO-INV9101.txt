@@ -1,0 +1,13 @@
+Document ID: DOC-DEMO-INV9101
+Document Type: Vendor Invoice
+Document Date: 2026-01-20
+Invoice ID: INV9101
+PO ID: PO9201
+Property ID: P901
+Project ID: PR901
+Vendor ID: V901
+Cost Code: CC901
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+Invoice INV9101 covers Demo structural blocks. Total: INR 112,000. Purchase order PO9201: INR 100,000.

@@ -1,0 +1,3 @@
+payment_id,invoice_id,property_id,project_id,vendor_id,payment_date,amount,payment_reference,payment_status
+PAY9301,INV9102,P901,PR901,V902,2026-01-25,22000,DEMO-PAYMENT-2,Completed
+PAY9302,INV9105,P902,PR902,V905,2026-01-25,80000,DEMO-PAYMENT-5,Completed

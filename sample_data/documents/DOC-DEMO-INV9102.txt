@@ -1,0 +1,13 @@
+Document ID: DOC-DEMO-INV9102
+Document Type: Vendor Invoice
+Document Date: 2026-01-20
+Invoice ID: INV9102
+PO ID: PO9202
+Property ID: P901
+Project ID: PR901
+Vendor ID: V902
+Cost Code: CC902
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+Invoice INV9102 covers Demo cable installation. Total: INR 66,000. Purchase order PO9202: INR 60,000.

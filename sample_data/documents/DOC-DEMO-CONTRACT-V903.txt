@@ -1,0 +1,10 @@
+Document ID: DOC-DEMO-CONTRACT-V903
+Document Type: Contract
+Document Date: 2026-01-20
+Property ID: P901
+Project ID: PR901
+Vendor ID: V903
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+Demo Breeze Mechanical supplies ventilation equipment for Demo Orchard Tower. An advance requires an approved purchase order, a signed advance request and current vendor registration documentation.

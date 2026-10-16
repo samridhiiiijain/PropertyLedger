@@ -1,0 +1,4 @@
+property_id,property_name,city,property_type,project_id,status
+P901,Demo Orchard Tower,Sample City A,Residential Tower,PR901,Active
+P902,Demo Lantern Arcade,Sample City B,Commercial,PR902,Active
+P903,Demo Meadow Court,Sample City C,Residential,PR903,On Hold

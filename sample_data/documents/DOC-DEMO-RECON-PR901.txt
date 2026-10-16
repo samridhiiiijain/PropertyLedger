@@ -1,0 +1,9 @@
+Document ID: DOC-DEMO-RECON-PR901
+Document Type: Reconciliation Note
+Document Date: 2026-01-20
+Property ID: P901
+Project ID: PR901
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+INV9101 exceeds PO9201 by INR 12,000. INV9102 exceeds PO9202 by INR 6,000 and has a completed payment of INR 22,000. INV9104 exceeds PO9204 by INR 5,000. INV9103 matches PO9203 but supporting advance documents remain missing.

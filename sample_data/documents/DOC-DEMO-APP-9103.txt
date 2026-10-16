@@ -1,0 +1,12 @@
+Document ID: DOC-DEMO-APP-9103
+Document Type: Approval Email
+Document Date: 2026-01-20
+Property ID: P901
+Project ID: PR901
+Vendor ID: V903
+Invoice ID: INV9103
+PO ID: PO9203
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+The INR 95,000 ventilation advance for INV9103 against PO9203 is conditionally approved. The signed advance request and current vendor registration documentation have not been received. Do not release payment until both are received.

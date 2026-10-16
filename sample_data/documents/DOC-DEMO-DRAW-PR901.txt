@@ -1,0 +1,9 @@
+Document ID: DOC-DEMO-DRAW-PR901
+Document Type: Draw Package
+Document Date: 2026-01-20
+Property ID: P901
+Project ID: PR901
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+The demo draw package groups costs under CC901, CC902, CC903 and CC904. Resolve invoice-to-PO variances and missing advance documents before including affected invoices in a payment run.

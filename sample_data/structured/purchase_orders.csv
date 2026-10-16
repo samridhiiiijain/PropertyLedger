@@ -1,0 +1,9 @@
+po_id,property_id,project_id,vendor_id,po_date,cost_code,description,po_quantity,po_unit_rate,po_total,approval_status
+PO9201,P901,PR901,V901,2026-01-05,CC901,Demo structural blocks,100,1000,100000,Approved
+PO9202,P901,PR901,V902,2026-01-05,CC902,Demo cable installation,200,300,60000,Approved
+PO9203,P901,PR901,V903,2026-01-05,CC903,Demo ventilation advance,1,95000,95000,Approved
+PO9204,P901,PR901,V904,2026-01-05,CC904,Demo lobby tiles,100,400,40000,Approved
+PO9205,P902,PR902,V905,2026-01-05,CC901,Demo foundation work,1,80000,80000,Approved
+PO9206,P902,PR902,V901,2026-01-05,CC901,Demo paving blocks,60,500,30000,Approved
+PO9207,P903,PR903,V904,2026-01-05,CC904,Demo corridor tiles,100,250,25000,Approved
+PO9208,P901,PR901,V901,2026-01-05,CC901,Demo extra structural blocks,20,1000,20000,Approved

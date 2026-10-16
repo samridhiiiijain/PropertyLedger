@@ -1,0 +1,13 @@
+Document ID: DOC-DEMO-INV9107
+Document Type: Vendor Invoice
+Document Date: 2026-01-20
+Invoice ID: INV9107
+PO ID: PO9207
+Property ID: P903
+Project ID: PR903
+Vendor ID: V904
+Cost Code: CC904
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+Invoice INV9107 covers Demo corridor tiles. Total: INR 28,000. Purchase order PO9207: INR 25,000. Payment is on hold. Obtain a corrected invoice or written approval for the INR 3,000 variance before release.

@@ -1,0 +1,9 @@
+Document ID: DOC-DEMO-CHECK-PR901
+Document Type: Finance Checklist
+Document Date: 2026-01-20
+Property ID: P901
+Project ID: PR901
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+Before payment, require a readable invoice, approved purchase order, valid cost code, current vendor documentation and any advance approval. An invoice exceeding its purchase order requires written variance approval.

@@ -1,0 +1,6 @@
+vendor_id,vendor_name,category,city,tax_id
+V901,Demo Pebble Materials,Construction Materials,Sample City A,DEMO-TAX-901
+V902,Demo Spark Wiring,Electrical,Sample City A,DEMO-TAX-902
+V903,Demo Breeze Mechanical,HVAC,Sample City B,DEMO-TAX-903
+V904,Demo Mosaic Interiors,Interior Finishes,Sample City C,DEMO-TAX-904
+V905,Demo Foundation Works,Civil Works,Sample City B,DEMO-TAX-905

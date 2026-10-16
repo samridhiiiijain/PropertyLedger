@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Relationship traversal and evidence linkage only. PostgreSQL remains authoritative for finance facts and calculations.",
+  "node_labels": {
+    "Property": {"key": "property_id", "properties": ["property_id"]},
+    "Project": {"key": "project_id", "properties": ["project_id"]},
+    "Invoice": {"key": "invoice_id", "properties": ["invoice_id"]},
+    "PurchaseOrder": {"key": "po_id", "properties": ["po_id"]},
+    "Vendor": {"key": "vendor_id", "properties": ["vendor_id"]},
+    "CostCode": {"key": "cost_code", "properties": ["cost_code"]},
+    "Document": {"key": "document_id", "properties": ["document_id", "source_id"]}
+  },
+  "relationships": [
+    {"type": "HAS_PROJECT", "from": "Property", "to": "Project"},
+    {"type": "HAS_INVOICE", "from": "Project", "to": "Invoice"},
+    {"type": "FOR_PROPERTY", "from": "Invoice", "to": "Property"},
+    {"type": "ISSUED_BY", "from": "Invoice", "to": "Vendor"},
+    {"type": "AGAINST_PO", "from": "Invoice", "to": "PurchaseOrder"},
+    {"type": "ORDERED_FROM", "from": "PurchaseOrder", "to": "Vendor"},
+    {"type": "USES_COST_CODE", "from": "Invoice", "to": "CostCode"},
+    {"type": "USES_COST_CODE", "from": "PurchaseOrder", "to": "CostCode"},
+    {"type": "SUPPORTED_BY", "from": "Invoice", "to": "Document"}
+  ],
+  "query_policy": {
+    "mode": "approved_templates_or_typed_plans_compiled_in_application",
+    "read_only": true,
+    "allowed_node_properties": "keys_only",
+    "financial_values": "fetch_from_postgresql_by_returned_stable_ids",
+    "operational_bounds": "Traversal depth, returned path count, and query time budget must be configurable and selected during implementation and graph workload evaluation. Do not treat them as fixed Phase 1 values."
+  },
+  "projection_policy": {
+    "bulk_financial_fact_copy": false,
+    "sync": "incremental_projection_from_authoritative_source",
+    "relationship_source": "validated finance identifiers and document links",
+    "unverified_or_extracted_relationships": "proposals_pending_validation"
+  }
+}

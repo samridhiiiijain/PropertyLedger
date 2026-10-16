@@ -1,0 +1,7 @@
+Document ID: DOC-DEMO-PROCEDURE
+Document Type: Finance Procedure
+Document Date: 2026-01-20
+
+SYNTHETIC DEMO DOCUMENT. All entities and amounts are fictional.
+
+Demo invoice approval procedure: verify project and vendor; match the invoice to its approved purchase order; check budget availability; collect required supporting approvals; reconcile completed payments. Escalate discrepancies for review.

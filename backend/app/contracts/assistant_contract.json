@@ -1,0 +1,49 @@
+{
+  "contract_version": "1.0.0",
+  "question": {"max_characters": 2000, "required": true},
+  "source_routing": {
+    "structured_finance": ["postgresql"],
+    "document_evidence": ["hybrid_document_retrieval"],
+    "relationship_path": ["neo4j"],
+    "combined": "query only the minimum sources needed, joining results through stable identifiers"
+  },
+  "text_to_sql": {
+    "model_output": "single_select_with_contract_placeholders_only",
+    "sql_compilation": "backend_ast_validation_and_limit_injection",
+    "parameterization": "required",
+    "allowed_placeholders": {
+      "filter_N": {"type": "resolved_filter_value", "resolver": "backend_query_plan"},
+      "condition_N": {"type": "resolved_metric_value", "resolver": "backend_query_plan"}
+    },
+    "limit_owner": "backend",
+    "model_receives_database_rows": false,
+    "database_role": "read_only",
+    "allowed_schema": "backend/app/contracts/finance_schema.json",
+    "operational_bounds": "Page sizes and query time budgets must be configurable and selected during implementation and workload evaluation. Do not treat them as fixed Phase 1 values.",
+    "reject_writes_ddl_system_catalogs_and_unapproved_joins": true,
+    "security_rejection_behavior": "deterministic_parameterized_fallback",
+    "semantic_retry_limit": 1
+  },
+  "document_retrieval": {
+    "candidate_methods": ["bm25", "dense_vector"],
+    "fusion": "reciprocal_rank_fusion",
+    "reranker": "cross_encoder_on_bounded_candidate_set",
+    "operational_bounds": "Candidate counts, reranking depth, and returned passage counts must be configurable and selected during retrieval-quality and workload evaluation. Do not treat them as fixed Phase 1 values.",
+    "apply_access_and_explicit_entity_filters_before_answering": true,
+    "retrieved_text_is_untrusted_evidence": true
+  },
+  "answer_policy": {
+    "material_claims_require_supporting_evidence": true,
+    "financial_calculation_source": "postgresql_or_approved_business_definition",
+    "document_claims_require_citations": true,
+    "clarify_when_scope_metric_period_or_currency_is_ambiguous": true,
+    "abstain_when_evidence_is_missing_conflicting_or_out_of_scope": true,
+    "never_claim_future_outcomes_as_certain": true
+  },
+  "access_policy": {
+    "enforce_user_scope_in_every_source": true,
+    "scope_must_be_bound_by_trusted_application_context": true,
+    "model_cannot_expand_access_scope": true
+  },
+  "timeouts": "Database, graph, retrieval, and answer-generation time budgets must be configurable and selected during implementation and workload evaluation."
+}

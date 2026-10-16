@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "source_of_truth": "postgresql",
+  "currency_policy": "Amounts retain source currency. Never aggregate across currencies without an approved conversion rate and effective date.",
+  "date_policy": "Business dates use ISO 8601 dates. Query intervals use inclusive start and exclusive end where possible.",
+  "entities": {
+    "property": {"table": "properties", "grain": "One property", "primary_key": ["property_id"], "fields": {"property_id": "string", "property_name": "string", "city": "string", "property_type": "string", "status": "string"}},
+    "project": {"table": "projects", "grain": "One project", "primary_key": ["project_id"], "fields": {"project_id": "string", "property_id": "string", "name": "string", "status": "string"}},
+    "vendor": {"table": "vendors", "grain": "One vendor", "primary_key": ["vendor_id"], "fields": {"vendor_id": "string", "vendor_name": "string", "category": "string", "city": "string", "tax_id": "string"}},
+    "cost_code": {"table": "cost_codes", "grain": "One cost code", "primary_key": ["cost_code"], "fields": {"cost_code": "string", "cost_category": "string", "description": "string", "budget_owner": "string"}},
+    "purchase_order": {"table": "purchase_orders", "grain": "One purchase order header", "primary_key": ["po_id"], "fields": {"po_id": "string", "property_id": "string", "project_id": "string", "vendor_id": "string", "po_date": "date", "cost_code": "string", "description": "string", "po_quantity": "integer", "po_unit_rate": "decimal", "po_total": "decimal", "currency": "string", "approval_status": "string"}},
+    "invoice": {"table": "invoices", "grain": "One invoice header", "primary_key": ["invoice_id"], "fields": {"invoice_id": "string", "property_id": "string", "project_id": "string", "vendor_id": "string", "po_id": "string", "invoice_date": "date", "due_date": "date", "cost_code": "string", "description": "string", "invoice_amount": "decimal", "paid_amount": "decimal", "currency": "string", "status": "string"}},
+    "payment": {"table": "payments", "grain": "One payment transaction", "primary_key": ["payment_id"], "fields": {"payment_id": "string", "invoice_id": "string", "property_id": "string", "project_id": "string", "vendor_id": "string", "payment_date": "date", "amount": "decimal", "currency": "string", "payment_reference": "string", "payment_status": "string"}},
+    "budget_line": {"table": "budgets", "grain": "One project-property-cost-code budget line", "primary_key": ["budget_id"], "candidate_natural_key": ["project_id", "property_id", "cost_code"], "fields": {"budget_id": "string", "property_id": "string", "project_id": "string", "cost_code": "string", "budget_amount": "decimal", "committed_amount": "decimal", "actual_amount": "decimal", "remaining_budget": "decimal", "currency": "string"}}
+  },
+  "relationships": [
+    {"from": "project.property_id", "to": "property.property_id", "cardinality": "many_to_one", "join": "projects.property_id = properties.property_id"},
+    {"from": "purchase_order.project_id", "to": "project.project_id", "cardinality": "many_to_one"},
+    {"from": "purchase_order.vendor_id", "to": "vendor.vendor_id", "cardinality": "many_to_one"},
+    {"from": "purchase_order.cost_code", "to": "cost_code.cost_code", "cardinality": "many_to_one"},
+    {"from": "invoice.project_id", "to": "project.project_id", "cardinality": "many_to_one"},
+    {"from": "invoice.vendor_id", "to": "vendor.vendor_id", "cardinality": "many_to_one"},
+    {"from": "invoice.po_id", "to": "purchase_order.po_id", "cardinality": "many_to_one"},
+    {"from": "invoice.cost_code", "to": "cost_code.cost_code", "cardinality": "many_to_one"},
+    {"from": "payment.invoice_id", "to": "invoice.invoice_id", "cardinality": "many_to_one"},
+    {"from": "budget_line.project_id + property_id + cost_code", "to": "project + property + cost_code", "cardinality": "many_to_one"}
+  ],
+  "join_safety": [
+    "Declare the grain of every query before joining or aggregating.",
+    "Joining invoice headers to payments can duplicate invoice amounts; aggregate payments to invoice grain first when both are needed.",
+    "Do not aggregate monetary values across currencies without an approved conversion rule.",
+    "Treat property-to-project cardinality as source-dependent until validated against production source data."
+  ],
+  "approved_metrics": [
+    {"slug": "unpaid-invoice", "grain": "one invoice", "predicate": "paid_amount = 0 AND normalized status IN (UNPAID, ON_HOLD)", "outstanding_amount": "invoice_amount - paid_amount", "note": "Partially paid invoices are not unpaid under this definition."},
+    {"slug": "po-variance", "grain": "one invoice matched to one purchase order", "predicate": "invoice_amount > po_total", "amount": "invoice_amount - po_total"},
+    {"slug": "cost-code-over-budget", "grain": "one project-property-cost-code budget line", "predicate": "committed_amount > budget_amount", "amount": "committed_amount - budget_amount"}
+  ],
+  "open_decisions": [
+    "Confirm production source systems, canonical currency fields, and status mappings with finance owners.",
+    "Confirm whether invoice line items are required; current model is invoice-header grain.",
+    "Confirm project/property cardinality and budget-line natural key from representative source data.",
+    "Confirm tenant or legal-entity access boundaries before exposing query tools."
+  ]
+}

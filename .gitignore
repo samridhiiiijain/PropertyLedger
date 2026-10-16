@@ -1,0 +1,48 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.env.local
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# JavaScript and frontend tooling
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+
+# Logs and caches
+*.log
+logs/
+.cache/
+tmp/
+temp/
+
+# Local databases and indexes
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+data/rag_index/
+*.index
+
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini

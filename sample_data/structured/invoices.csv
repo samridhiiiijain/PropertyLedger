@@ -1,0 +1,9 @@
+invoice_id,property_id,project_id,vendor_id,po_id,invoice_date,due_date,cost_code,description,invoice_amount,paid_amount,status
+INV9101,P901,PR901,V901,PO9201,2026-01-15,2026-02-14,CC901,Demo structural blocks,112000,0,Unpaid
+INV9102,P901,PR901,V902,PO9202,2026-01-15,2026-02-14,CC902,Demo cable installation,66000,22000,Partially Paid
+INV9103,P901,PR901,V903,PO9203,2026-01-15,2026-02-14,CC903,Demo ventilation advance,95000,0,Unpaid
+INV9104,P901,PR901,V904,PO9204,2026-01-15,2026-02-14,CC904,Demo lobby tiles,45000,0,On Hold
+INV9105,P902,PR902,V905,PO9205,2026-01-15,2026-02-14,CC901,Demo foundation work,80000,80000,Paid
+INV9106,P902,PR902,V901,PO9206,2026-01-15,2026-02-14,CC901,Demo paving blocks,30000,0,Unpaid
+INV9107,P903,PR903,V904,PO9207,2026-01-15,2026-02-14,CC904,Demo corridor tiles,28000,0,On Hold
+INV9108,P901,PR901,V901,PO9208,2026-01-15,2026-02-14,CC901,Demo extra structural blocks,23000,0,Unpaid
